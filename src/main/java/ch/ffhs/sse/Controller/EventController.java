@@ -26,13 +26,13 @@ public class EventController {
     }
 
     @GetMapping(value = "/listAllEvents")
-    public List<Event> getUsers() {
+    public List<Event> getEvents() {
         return eventRepository.findAll();
     }
 
     @GetMapping(value = "/getUserEvents")
-    public List<Event> getEvents(@PathVariable Long userId) {
-        List eventList = eventRepository.findEventsByUserId(userId);
+    public List<Event> getEvents(@RequestBody Event event) {
+        List eventList = eventRepository.findEventsByUserId();
         return eventList;
     }
 

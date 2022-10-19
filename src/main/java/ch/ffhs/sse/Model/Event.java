@@ -27,5 +27,5 @@ public class Event implements Serializable {
 
     @ManyToOne(targetEntity = User.class, optional = false)
     @JoinColumn(name="id",referencedColumnName="id", insertable=false, updatable=false)
-    private long userId;
+    private User user;
 }
