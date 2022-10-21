@@ -1,5 +1,6 @@
 package ch.ffhs.sse.Model;
 import ch.ffhs.sse.EventType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,13 +11,15 @@ public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private long id;
+    private long eventId;
 
     @Enumerated(EnumType.ORDINAL)
     private EventType eventType;
 
     @Column
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
+    //@JsonFormat(pattern="dd/MM/yyyy hh:mm")
     private Timestamp start;
 
     @Column
@@ -25,7 +28,16 @@ public class Event implements Serializable {
     @Column
     private boolean allDay;
 
-    @ManyToOne(targetEntity = User.class, optional = false)
-    @JoinColumn(name="id",referencedColumnName="id", insertable=false, updatable=false)
+    @ManyToOne//(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="userId",nullable = false)
     private User user;
+
+    public Event(){
+
+
+    }
+
+    //@OneToOne(mappedBy = "event")
+    //@JoinColumn(name ="eventId", insertable=false, updatable=false)
+    //private User user;
 }

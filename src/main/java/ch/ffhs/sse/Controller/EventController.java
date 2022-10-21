@@ -19,8 +19,8 @@ public class EventController {
         this.eventRepository = eventRepository;
     }
 
-    @PutMapping(value = "getEvent/{event_id}")
-    public Event getUserById(@PathVariable Long id, @RequestBody Event event) {
+    @PutMapping(value = "getEvent/{id}")
+    public Event getEventById(@PathVariable Long id, @RequestBody Event event) {
         event = eventRepository.findById(id).get();
         return event;
     }
@@ -30,11 +30,11 @@ public class EventController {
         return eventRepository.findAll();
     }
 
-    @GetMapping(value = "/getUserEvents")
-    public List<Event> getEvents(@RequestBody Event event) {
-        List eventList = eventRepository.findEventsByUserId();
-        return eventList;
-    }
+  //  @GetMapping(value = "/getUserEvents")
+  //  public List<Event> getEvents(@RequestBody Event event) {
+       // List eventList = eventRepository.getEventsByUserId();
+        //  return eventList;
+   // }
 
     @PostMapping(value = "/save")
     public String saveEvent(@RequestBody Event event) {
