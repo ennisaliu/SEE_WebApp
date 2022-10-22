@@ -1,6 +1,9 @@
 package ch.ffhs.sse.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -8,7 +11,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
-    private long id;
+    private long userId;
     @Column(unique = true)
     private String email;
     @Column
@@ -18,23 +21,36 @@ public class User {
     @Column
     private String lastName;
 
-    public User() {
-    }
+    @JsonIgnore
+    @ManyToMany(mappedBy = "eventParticipants")
+    private Set<Event> events = new HashSet<>();
 
-    public User(long id, String email, String password, String firstName, String lastName) {
-        this.id = id;
+   // @OneToMany(mappedBy = "user")
+
+    //@OneToOne(cascade =CascadeType.ALL)//@ManyToOne(targetEntity = Event.class, optional = false)
+    //@ManyToOne
+    //@JoinColumn(name="event_id",referencedColumnName="id")
+    //private Event event;
+
+
+    public User(long userId, String email, String password, String firstName, String lastName) {
+        this.userId = userId;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public long getId() {
-        return id;
+    public User() {
+
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long id) {
+        this.userId = id;
     }
 
     public String getEmail() {
@@ -69,10 +85,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Set<Event> getEvents() {
+        return events;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + userId +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
