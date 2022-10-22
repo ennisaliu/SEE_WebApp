@@ -1,10 +1,11 @@
 package ch.ffhs.sse.Model;
 import ch.ffhs.sse.EventType;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Event implements Serializable {
@@ -12,6 +13,12 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private long eventId;
+
+    /*
+    @ManyToOne //(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="userId",nullable = false)
+    private User user;
+    */
 
     @Enumerated(EnumType.ORDINAL)
     private EventType eventType;
@@ -29,23 +36,29 @@ public class Event implements Serializable {
     @Column
     private boolean allDay;
 
-    @ManyToOne //(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="userId",nullable = false)
-    private User user;
+    //define many to many relationship event <-> user and create a table for reference
+    //users participation in the event get saved in a HashSet
+    @ManyToMany
+    @JoinTable(
+            name = "event_participants",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    Set<User> eventParticipants = new HashSet<>();
 
-    public Event(long eventId, boolean allDay, Timestamp start, Timestamp end, EventType eventType, User user {
+    /*
+    public Event(long eventId, boolean allDay, Timestamp start, Timestamp end, EventType eventType) {
         this.eventId = eventId;
         this.allDay = allDay;
         this.start = start;
         this.end = end;
         this.eventType = eventType;
-        this.user = user.getUserId();
     }
 
     public Event(){
 
-
     }
+    */
     public long getEventId() {
         return eventId;
     }
@@ -53,9 +66,6 @@ public class Event implements Serializable {
     public void setEventId(long id) {
         this.eventId = id;
     }
-    //public long getUserId() {
-    //    return getUserId();
-    //}
 
     public void setUserId(long id) {
         setUserId(id);
@@ -82,5 +92,8 @@ public class Event implements Serializable {
         this.allDay = allDay;
     }
 
+    public Set<User> getEventParticipants() {
+        return eventParticipants;
+    }
 
 }

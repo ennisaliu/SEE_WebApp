@@ -1,6 +1,8 @@
 package ch.ffhs.sse.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,8 +21,11 @@ public class User {
     @Column
     private String lastName;
 
-@OneToMany(mappedBy = "user")
-private Set <Event> events;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "eventParticipants")
+    private Set<Event> events = new HashSet<>();
+
+   // @OneToMany(mappedBy = "user")
 
     //@OneToOne(cascade =CascadeType.ALL)//@ManyToOne(targetEntity = Event.class, optional = false)
     //@ManyToOne
@@ -78,6 +83,10 @@ private Set <Event> events;
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
     }
 
     @Override
