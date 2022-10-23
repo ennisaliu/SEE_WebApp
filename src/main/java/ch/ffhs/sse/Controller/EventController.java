@@ -50,6 +50,15 @@ public class EventController {
         }
     }
 
+    //Post event method requiring the userId Parameter (Can save Event directly for the user)
+    @PostMapping("/{userId}")
+    Event saveEventWithUser(@RequestBody Event event, @PathVariable Long userId) {
+        User user = userRepository.findById(userId).get();
+        // Add user object to the event object and save it by using the save method from event repo..
+        event.getEventParticipants().add(user);
+        return eventRepository.save(event);
+    }
+
     /*
    @PutMapping(value = "getEvent/{id}")
     public Event getEventById(@PathVariable Long id, @RequestBody Event event) {
