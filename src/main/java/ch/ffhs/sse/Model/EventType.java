@@ -1,4 +1,4 @@
-package ch.ffhs.sse;
+package ch.ffhs.sse.Model;
 
 public enum EventType {
 

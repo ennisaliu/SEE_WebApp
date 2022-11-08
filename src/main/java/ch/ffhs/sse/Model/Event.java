@@ -1,5 +1,4 @@
 package ch.ffhs.sse.Model;
-import ch.ffhs.sse.EventType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.io.Serializable;
