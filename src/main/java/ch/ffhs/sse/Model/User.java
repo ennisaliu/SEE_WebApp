@@ -1,17 +1,24 @@
 package ch.ffhs.sse.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.context.annotation.RequestScope;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+@Entity @RequestScope
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private long userId;
+
+    @Column(unique = true)
+    private String username;
+
+    @Column
+    private String role;
     @Column(unique = true)
     private String email;
     @Column
@@ -32,9 +39,9 @@ public class User {
     //@JoinColumn(name="event_id",referencedColumnName="id")
     //private Event event;
 
-
     public User(long userId, String email, String password, String firstName, String lastName) {
         this.userId = userId;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -83,6 +90,20 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Set<Event> getEvents() {
