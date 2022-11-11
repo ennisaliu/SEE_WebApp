@@ -2,6 +2,7 @@ package ch.ffhs.sse.Controller;
 
 import ch.ffhs.sse.Exception.UserNotFound;
 import ch.ffhs.sse.Model.Event;
+import ch.ffhs.sse.Model.EventType;
 import ch.ffhs.sse.Model.User;
 import ch.ffhs.sse.Repository.EventRepository;
 import ch.ffhs.sse.Repository.UserRepository;
@@ -17,6 +18,8 @@ public class EventController {
     EventRepository eventRepository;
     UserRepository userRepository;
 
+    EventType eventType;
+
     private EventController(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
@@ -24,8 +27,10 @@ public class EventController {
 
     @PostMapping
     Event saveEvent(@RequestBody Event event) {
+        event.getEventType();
         return eventRepository.save(event);
     }
+
     @GetMapping
     public List<Event> getEvents() {
         return eventRepository.findAll();

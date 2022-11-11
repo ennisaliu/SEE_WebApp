@@ -1,6 +1,7 @@
 package ch.ffhs.sse.Repository;
 
 import ch.ffhs.sse.Model.Event;
+import ch.ffhs.sse.Model.EventType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -27,6 +28,10 @@ public interface EventRepository extends JpaRepository<Event, Long>, PagingAndSo
     //Test if e.user or e.user.id is correct to assigned the foreign key userId
     @Query(value="select * from event e where e.user = :userId", nativeQuery=true)
     List<Event> getEventsByUserId(long userId);
+
+    //Get all events based on event type --> example: show only 'Ferien'.
+    EventType findByEventType(EventType eventType);
+
 
     // select * from Event where user.id = 2;
     //List<Event> findEventsByUserId(Event event);
