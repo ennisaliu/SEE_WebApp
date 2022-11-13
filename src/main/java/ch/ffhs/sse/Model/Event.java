@@ -1,10 +1,14 @@
 package ch.ffhs.sse.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,13 +34,14 @@ public class Event implements Serializable {
 
     //@JsonFormat(pattern="dd/MM/yyyy hh:mm")
    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+1")
-    private Timestamp start;
-
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+1")
+    //private Timestamp start;
+    private LocalDateTime start;
     @Column
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+1")
-    private Timestamp end;
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+1")
+    //private Timestamp end;
+    private LocalDateTime end;
 
     @Column
     private boolean allDay;
@@ -75,24 +80,24 @@ public class Event implements Serializable {
     public void setUserId(long id) {
         setUserId(id);
     }
-        public Timestamp getEnd() {
-            return end;
 
+    public LocalDateTime getStart() {
+        return start;
     }
-    public void setEnd(Timestamp end) {
+    public void setStart(LocalDateTime start) {
+        this.start = start;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
+    }
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
     public boolean getAllDay() {
         return allDay;
+    }
 
-    }
-    public Timestamp getStart() {
-        return start;
-
-    }
-    public void setStart(Timestamp start) {
-        this.start = start;
-    }
     public void setAllDay(boolean allDay) {
         this.allDay = allDay;
     }
