@@ -35,6 +35,20 @@ public class EventController {
     public List<Event> getEvents() {
         return eventRepository.findAll();
     }
+    @DeleteMapping
+    public String deleteEvent(@RequestParam long Id) {
+        Event deleteEvent = eventRepository.findById(Id).get();
+        eventRepository.delete(deleteEvent);
+        return "Event " + deleteEvent + " was deleted successfully.";
+    }
+    @PutMapping
+    public String updateEvent(@PathVariable long id, @RequestBody Event event) {
+        Event updatedEvent = eventRepository.findById(id).get();;
+        updatedEvent.setStart(event.getStart());
+        updatedEvent.setEnd(event.getEnd());
+        eventRepository.save(updatedEvent);
+        return "User: " + updatedEvent + " was updated successfully.";
+    }
 
     // In order to save an event with the user we need to instantiate both objects.
     // We then find both objects by id and assign the user to event.
