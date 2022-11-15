@@ -51,7 +51,7 @@ public class EventController {
         updatedEvent.setAllDay(event.getAllDay());
         //updatedEvent.setUserId();
         eventRepository.save(updatedEvent);
-        return "User: " + updatedEvent + " was updated successfully.";
+        return "Event: " + updatedEvent + " was updated successfully.";
     }
 
     // In order to save an event with the user we need to instantiate both objects.
