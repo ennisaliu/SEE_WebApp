@@ -1,6 +1,5 @@
 package ch.ffhs.sse.Controller;
 
-import ch.ffhs.sse.Exception.UserNotFound;
 import ch.ffhs.sse.Model.Event;
 import ch.ffhs.sse.Model.EventType;
 import ch.ffhs.sse.Model.User;
@@ -35,17 +34,22 @@ public class EventController {
     public List<Event> getEvents() {
         return eventRepository.findAll();
     }
+
     @DeleteMapping
     public String deleteEvent(@RequestParam long Id) {
         Event deleteEvent = eventRepository.findById(Id).get();
         eventRepository.delete(deleteEvent);
         return "Event " + deleteEvent + " was deleted successfully.";
     }
+
     @PutMapping
-    public String updateEvent(@PathVariable long id, @RequestBody Event event) {
-        Event updatedEvent = eventRepository.findById(id).get();;
+    public String updateEvent(@RequestBody Event event) {
+        Event updatedEvent = eventRepository.findById(event.getEventId()).get();
         updatedEvent.setStart(event.getStart());
         updatedEvent.setEnd(event.getEnd());
+        updatedEvent.setEventType(event.getEventType());;
+        updatedEvent.setAllDay(event.getAllDay());
+        //updatedEvent.setUserId();
         eventRepository.save(updatedEvent);
         return "User: " + updatedEvent + " was updated successfully.";
     }
@@ -53,7 +57,7 @@ public class EventController {
     // In order to save an event with the user we need to instantiate both objects.
     // We then find both objects by id and assign the user to event.
     @PutMapping("/{eventId}/users/{userId}")
-    String addUserToEvent (
+    String addUserToEvent(
             @PathVariable Long eventId,
             @PathVariable Long userId
     ) {
@@ -66,7 +70,7 @@ public class EventController {
                 // Add user object to the event object and save it by using the save method from event repo..
                 event.getEventParticipants().add(user);
                 // Return the saved event
-                return user.getFirstName() +" " + user.getLastName() + "was added to the Event ID:  " + event.getEventId();
+                return user.getFirstName() + " " + user.getLastName() + "was added to the Event ID:  " + event.getEventId();
             } else {
                 throw new Exception("User or Event not found");
             }
