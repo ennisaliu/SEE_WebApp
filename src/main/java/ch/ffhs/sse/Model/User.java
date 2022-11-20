@@ -1,4 +1,5 @@
 package ch.ffhs.sse.Model;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -6,7 +7,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity @RequestScope
+@Entity
+@RequestScope
 public class User {
 
     @Id
@@ -32,7 +34,7 @@ public class User {
     @ManyToMany(mappedBy = "eventParticipants")
     private Set<Event> events = new HashSet<>();
 
-   // @OneToMany(mappedBy = "user")
+    // @OneToMany(mappedBy = "user")
 
     //@OneToOne(cascade =CascadeType.ALL)//@ManyToOne(targetEntity = Event.class, optional = false)
     //@ManyToOne
@@ -95,9 +97,11 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getUsername() {
         return username;
     }
+
     public String getRole() {
         return role;
     }

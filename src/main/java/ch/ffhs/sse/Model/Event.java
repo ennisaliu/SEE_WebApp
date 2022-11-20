@@ -1,14 +1,8 @@
 package ch.ffhs.sse.Model;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,7 +27,7 @@ public class Event implements Serializable {
     //@NotNull
 
     //@JsonFormat(pattern="dd/MM/yyyy hh:mm")
-   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+1")
     //private Timestamp start;
     private LocalDateTime start;
@@ -84,6 +78,7 @@ public class Event implements Serializable {
     public LocalDateTime getStart() {
         return start;
     }
+
     public void setStart(LocalDateTime start) {
         this.start = start;
     }
@@ -91,9 +86,11 @@ public class Event implements Serializable {
     public LocalDateTime getEnd() {
         return end;
     }
+
     public void setEnd(LocalDateTime end) {
         this.end = end;
     }
+
     public boolean getAllDay() {
         return allDay;
     }
