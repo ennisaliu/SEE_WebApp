@@ -3,6 +3,7 @@ package ch.ffhs.sse.Controller;
 import ch.ffhs.sse.Model.User;
 import ch.ffhs.sse.Repository.EventRepository;
 import ch.ffhs.sse.Repository.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
