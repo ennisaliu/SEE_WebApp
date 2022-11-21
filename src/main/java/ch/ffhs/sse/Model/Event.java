@@ -23,13 +23,14 @@ public class Event implements Serializable {
     @Column
     private EventType eventType;
 
-    @Column
+
     //@NotNull
 
     //@JsonFormat(pattern="dd/MM/yyyy hh:mm")
     // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+1")
     //private Timestamp start;
+    @Column
     private LocalDateTime start;
     @Column
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")

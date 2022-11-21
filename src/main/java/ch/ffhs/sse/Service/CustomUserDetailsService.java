@@ -15,7 +15,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/** Implementation of a custom UserDetailService **/
+/**
+ * Implementation of a custom UserDetailService which gets used
+ * by the AuthenticationProvider.
+ * https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/user-details-service.html#servlet-authentication-userdetailsservice
+ **/
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -29,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
          ** Return user object or exception if parameter matches no username. **/
 
         User user = userRepository.findByUsername(username);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException(username + " was not found.");
         }
         return new CustomUserDetails(user);
