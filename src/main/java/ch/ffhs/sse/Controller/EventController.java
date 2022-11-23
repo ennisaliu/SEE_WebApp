@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
@@ -25,12 +25,14 @@ public class EventController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     Event saveEvent(@RequestBody Event event) {
         event.getEventType();
         return eventRepository.save(event);
     }
 
     @GetMapping
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Event> getEvents() {
         return eventRepository.findAll();
     }
