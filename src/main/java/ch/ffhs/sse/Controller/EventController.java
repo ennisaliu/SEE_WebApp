@@ -91,6 +91,7 @@ public class EventController {
         return eventRepository.save(event);
     }
 
+
     /*
    @PutMapping(value = "getEvent/{id}")
     public Event getEventById(@PathVariable Long id, @RequestBody Event event) {
