@@ -64,4 +64,11 @@ public class UserController {
         user = userRepository.findByEmail(email);
         return user;
     }
+
+    @PostMapping(value = "/login")
+    public boolean loginUser(@RequestParam String username, @RequestParam String password, @RequestBody User user) {
+        user = userRepository.findUserByUsernameAndPassword(username, password);
+        if(!user.equals(null)) return true;
+        return false;
+    }
 }

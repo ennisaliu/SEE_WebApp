@@ -1,17 +1,12 @@
 package ch.ffhs.sse.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.context.annotation.RequestScope;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@RequestScope
 public class User {
 
     @Id
@@ -44,7 +39,7 @@ public class User {
     //@JoinColumn(name="event_id",referencedColumnName="id")
     //private Event event;
 
-    public User(long userId, String username, String email, String password, String firstName, String lastName) {
+    public User(long userId, String email, String password, String firstName, String lastName) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -105,7 +100,6 @@ public class User {
         return username;
     }
 
-
     public String getRole() {
         return role;
     }
@@ -128,5 +122,4 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
-
 }
