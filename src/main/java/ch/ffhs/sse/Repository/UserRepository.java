@@ -17,8 +17,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
 
     /** Checks if username and password matches a user in database **/
-
-
     @Query(value = "SELECT * FROM user WHERE user.username = :username AND user.password = :password" , nativeQuery=true)
     List<User> findUserWithParams(@Param("username") String username, @Param("password") String password);
 
