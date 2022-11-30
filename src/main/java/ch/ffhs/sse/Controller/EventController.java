@@ -59,7 +59,7 @@ public class EventController {
     // In order to save an event with the user we need to instantiate both objects.
     // We then find both objects by id and assign the user to event.
     @PutMapping("/{eventId}/users/{userId}")
-    String addUserToEvent(
+    String assignUserToEvent(
             @PathVariable Long eventId,
             @PathVariable Long userId
     ) {
@@ -91,20 +91,10 @@ public class EventController {
         return eventRepository.save(event);
     }
 
-
-    /*
-   @PutMapping(value = "getEvent/{id}")
-    public Event getEventById(@PathVariable Long id, @RequestBody Event event) {
-        event = eventRepository.findById(id).get();
-        return event;
+    /** Gets all events for a single user selected through the userId in the URL path **/
+    @GetMapping("/{userId}")
+    public List<Event> getUserEvents(@PathVariable Long userId) {
+        return eventRepository.findEventsByUserId(userId);
     }
-
-    @GetMapping(value = "/getUserEvents")
-    public List<Event> getEvents(@RequestBody Event event) {
-        List eventList = eventRepository.getEventsByUserId();
-          return eventList;
-    }
-
-    */
 
 }

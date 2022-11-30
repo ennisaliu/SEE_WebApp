@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public String deleteUser(@PathVariable long id) {
+    public String deleteUser(@RequestParam long id) {
         User deleteUser = userRepository.findById(id).get();
         // Store name of user before deleting for String return
         String deletedFirstName = deleteUser.getFirstName();

@@ -12,13 +12,15 @@ import java.util.List;
 //The JPA repository needs the class and the type of the primary key (in this case User and Long
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // We can add methods in addition to the default methods provided by the JPA repository. For example findByEmail.
-
-    User findByEmail(String email);
 
     /** Checks if username and password matches a user in database **/
     @Query(value = "SELECT * FROM user WHERE user.username = :username AND user.password = :password" , nativeQuery=true)
     List<User> findUserWithParams(@Param("username") String username, @Param("password") String password);
 
-    User findByUsername(String username);
+    User findUserByUsernameAndPassword(String username, String password);
+
+    /** find user by email parameter (String) **/
+    //@Query(value = "SELECT * FROM user WHERE user.username = :username" , nativeQuery=true)
+    User findByEmail(@Param("email") String email);
+
 }
