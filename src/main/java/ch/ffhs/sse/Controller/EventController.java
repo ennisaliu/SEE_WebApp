@@ -90,7 +90,6 @@ public class EventController {
         event.getEventParticipants().add(user);
         return eventRepository.save(event);
     }
-
     /** Gets all events for a single user selected through the userId in the URL path **/
     @GetMapping("/{userId}")
     public List<Event> getUserEvents(@PathVariable Long userId) {

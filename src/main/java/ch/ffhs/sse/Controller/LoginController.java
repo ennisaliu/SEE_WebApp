@@ -25,4 +25,5 @@ public class LoginController {
         User authUser = userRepository.findUserByUsernameAndPassword(username, password);
         return authUser;
     }
+
 }

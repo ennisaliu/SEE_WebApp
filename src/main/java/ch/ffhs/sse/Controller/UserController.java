@@ -62,4 +62,5 @@ public class UserController {
         user = userRepository.findByEmail(email);
         return user;
     }
+
 }

@@ -21,5 +21,4 @@ public interface EventRepository extends JpaRepository<Event, Long>, PagingAndSo
     List<Event> findEventsByUserId(@Param("userId") long userId);
 
 
-
 }
