@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
@@ -25,12 +25,14 @@ public class EventController {
     }
 
     @PostMapping
-    public Event saveEvent(@RequestBody Event event) {
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    Event saveEvent(@RequestBody Event event) {
         event.getEventType();
         return eventRepository.save(event);
     }
 
     @GetMapping
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Event> getEvents() {
         return eventRepository.findAll();
     }
@@ -57,12 +59,13 @@ public class EventController {
     // In order to save an event with the user we need to instantiate both objects.
     // We then find both objects by id and assign the user to event.
     @PutMapping("/{eventId}/users/{userId}")
-    public String assignUserToEvent(
+    String assignUserToEvent(
             @PathVariable Long eventId,
             @PathVariable Long userId
     ) {
         try {
             // Get the event and user by ID
+
             Event event = eventRepository.findById(eventId).get();
             User user = userRepository.findById(userId).get();
             if (!user.equals(null) || !event.equals(null)) {
@@ -79,44 +82,19 @@ public class EventController {
         }
     }
 
-    /** Post event method requiring the userId parameter (Can save event directly for the user) **/
+    //Post event method requiring the userId Parameter (Can save Event directly for the user)
     @PostMapping("/{userId}")
-    public Event saveUserEvent(@RequestBody Event event, @PathVariable Long userId) {
+    Event saveEventWithUser(@RequestBody Event event, @PathVariable Long userId) {
         User user = userRepository.findById(userId).get();
         // Add user object to the event object and save it by using the save method from event repo..
         event.getEventParticipants().add(user);
         return eventRepository.save(event);
     }
 
-    /** Gets all events for a user selected through the userId in the URL path **/
+    /** Gets all events for a single user selected through the userId in the URL path **/
     @GetMapping("/{userId}")
     public List<Event> getUserEvents(@PathVariable Long userId) {
         return eventRepository.findEventsByUserId(userId);
     }
-
-    /** Delete an event assigned to a user **/
-    @DeleteMapping("/{userId}")
-    public String deleteUserEvent(@RequestBody Event event, @PathVariable Long userId) {
-        User user = userRepository.findById(userId).get();
-        Event deleteEvent = eventRepository.findById(event.getEventId()).get();
-        // Remove user from relation table first
-        event.getEventParticipants().remove(user);
-        eventRepository.delete(deleteEvent);
-        return "Event " + deleteEvent + " was deleted successfully.";
-    }
-
-    /* ######### NOT USED #########
-    @PutMapping("/{userId}")
-    public String updateUserEvent(@RequestBody Event event, @PathVariable Long userId) {
-        Event updatedEvent = eventRepository.findById(event.getEventId()).get();
-        updatedEvent.setStart(event.getStart());
-        updatedEvent.setEnd(event.getEnd());
-        updatedEvent.setEventType(event.getEventType());;
-        updatedEvent.setAllDay(event.getAllDay());
-        //updatedEvent.setUserId();
-        eventRepository.save(updatedEvent);
-        return "Event: " + updatedEvent + " was updated successfully.";
-    }
-    */
 
 }
