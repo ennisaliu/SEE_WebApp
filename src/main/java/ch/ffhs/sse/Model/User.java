@@ -13,16 +13,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private long userId;
-
     @Column(unique = true)
     private String username;
 
-    @Column
-    private String role;
     @Column(unique = true)
     private String email;
+
     @Column
     private String password;
+    @Column
+    private String role;
     @Column
     private String firstName;
     @Column
@@ -39,11 +39,12 @@ public class User {
     //@JoinColumn(name="event_id",referencedColumnName="id")
     //private Event event;
 
-    public User(long userId, String email, String password, String firstName, String lastName) {
-        this.userId = userId;
+
+    public User(String username, String email, String password, String role, String firstName, String lastName) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
     }
