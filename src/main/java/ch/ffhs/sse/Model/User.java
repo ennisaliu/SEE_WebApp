@@ -15,10 +15,8 @@ public class User {
     private long userId;
     @Column(unique = true)
     private String username;
-
     @Column(unique = true)
     private String email;
-
     @Column
     private String password;
     @Column
@@ -29,8 +27,9 @@ public class User {
     private String lastName;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "eventParticipants")
+    @ManyToMany(mappedBy = "eventParticipants", fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<>();
+
 
     // @OneToMany(mappedBy = "user")
 

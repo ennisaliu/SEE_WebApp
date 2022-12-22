@@ -1,15 +1,26 @@
-import React from "react"
+import React from "react";
+//importing CSS
 import './Login.css';
-import {useNavigate } from 'react-router-dom';
+//importing useNavigate to navigate from login page to calendar page
+import { useNavigate } from 'react-router-dom';
+//importing axios for backend api
 import axios from 'axios';
+
+//define global variable
+export let currentUser = {};
+
+//define url path
 const session_url = 'http://localhost:8080/login';
-export let currentUser={};
+
+//login function for app.js
 export function Login(props) {
   const navigate = useNavigate();
-
   let uname;
   let password;
 
+  //------------------------------------------------------------------------------
+  //------handleSubmit------------------------------------------------------------
+  //------------------------------------------------------------------------------
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -21,9 +32,9 @@ export function Login(props) {
 
       //checks if backend found a user
       if (response.data) {
-        // save userdata for session
+        //save userdata for session
         currentUser = response.data;
-        // redirect to /fullcalendar
+        //redirect to /fullcalendar
         navigate('fullcalendar');
       } else {
         alert('Wrong username or password.')
@@ -31,7 +42,12 @@ export function Login(props) {
     });
   }
 
+
+  //------------------------------------------------------------------------------
+  //------handleOnBlur------------------------------------------------------------
+  //------------------------------------------------------------------------------
   const handleOnBlur = (e, prop) => {
+    //saves user input in login form
     if (prop === "uname") {
       uname = e.target.value;
     } else if (prop === "password") {
@@ -42,12 +58,14 @@ export function Login(props) {
   }
 
 
+  //------------------------------------------------------------------------------
+  //------final output login form-------------------------------------------------
+  //--------index page------------------------------------------------------------
   return (
     <div className="Auth-form-container">
-
       <form className="Auth-form">
         <div className="Auth-form-content">
-          <img src={require('./FFHS_Logo.png')} alt="FFHS Logo"/>
+          <img src={require('./FFHS_Logo.png')} alt="FFHS Logo" />
           <h3 className="Auth-form-title">Sign In</h3>
           <div className="form-group mt-3">
             <label>Username</label>

@@ -1,5 +1,6 @@
 package ch.ffhs.sse.Controller;
 
+import ch.ffhs.sse.Exception.NotFoundException;
 import ch.ffhs.sse.Model.Event;
 import ch.ffhs.sse.Model.EventType;
 import ch.ffhs.sse.Model.User;
@@ -9,15 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
+@CrossOrigin(origins = "http://65.108.88.203:8080", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
 
     EventRepository eventRepository;
     UserRepository userRepository;
-
-    EventType eventType;
 
     private EventController(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
@@ -54,9 +54,10 @@ public class EventController {
         return "Event: " + updatedEvent + " was updated successfully.";
     }
 
+    /** Assign existing user to existing event */
     // In order to save an event with the user we need to instantiate both objects.
     // We then find both objects by id and assign the user to event.
-    @PutMapping("/{eventId}/users/{userId}")
+    @PutMapping("/{eventId}/user/{userId}")
     public String assignUserToEvent(
             @PathVariable Long eventId,
             @PathVariable Long userId
@@ -65,13 +66,16 @@ public class EventController {
             // Get the event and user by ID
             Event event = eventRepository.findById(eventId).get();
             User user = userRepository.findById(userId).get();
+            //check if  any of the two objects are empty
             if (!user.equals(null) || !event.equals(null)) {
                 // Add user object to the event object and save it by using the save method from event repo..
                 event.getEventParticipants().add(user);
+                eventRepository.save(event);
                 // Return the saved event
-                return user.getFirstName() + " " + user.getLastName() + "was added to the Event ID:  " + event.getEventId();
+                return user.getFirstName() + " " + user.getLastName() + " was added to the Event ID:  " + event.getEventId();
+            //throw error if any user or object is empty
             } else {
-                throw new Exception("User or Event not found");
+                throw new NotFoundException("User or Event not found");
             }
 
         } catch (Exception e) {
@@ -104,19 +108,5 @@ public class EventController {
         eventRepository.delete(deleteEvent);
         return "Event " + deleteEvent + " was deleted successfully.";
     }
-
-    /* ######### NOT USED #########
-    @PutMapping("/{userId}")
-    public String updateUserEvent(@RequestBody Event event, @PathVariable Long userId) {
-        Event updatedEvent = eventRepository.findById(event.getEventId()).get();
-        updatedEvent.setStart(event.getStart());
-        updatedEvent.setEnd(event.getEnd());
-        updatedEvent.setEventType(event.getEventType());;
-        updatedEvent.setAllDay(event.getAllDay());
-        //updatedEvent.setUserId();
-        eventRepository.save(updatedEvent);
-        return "Event: " + updatedEvent + " was updated successfully.";
-    }
-    */
 
 }

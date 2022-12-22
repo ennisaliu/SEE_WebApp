@@ -8,20 +8,19 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
-//The JPA repository needs the class and the type of the primary key (in this case User and Long
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     /** Checks if username and password matches a user in database **/
-    @Query(value = "SELECT * FROM user WHERE user.username = :username AND user.password = :password" , nativeQuery=true)
-    List<User> findUserWithParams(@Param("username") String username, @Param("password") String password);
-
     User findUserByUsernameAndPassword(String username, String password);
 
-    /** find user by email parameter (String) **/
-    //@Query(value = "SELECT * FROM user WHERE user.username = :username" , nativeQuery=true)
+    /** Test methods: these are used only for testing purposes **/
+    @Query(value = "SELECT user_id, username FROM user WHERE user.username = :username AND user.password = :password" , nativeQuery=true)
+    User authenticate(String username, String password);
+
     User findByEmail(@Param("email") String email);
-
-
+    @Query("SELECT CASE WHEN COUNT(user) > 0 THEN TRUE ELSE FALSE END FROM User user WHERE user.username = ?1")
+    Boolean existsUserByUsername(String username);
+    @Query(value = "SELECT user_id FROM user WHERE user.username = :username" , nativeQuery=true)
+    long findUserIdByUsername(String username);
 }

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "http://65.108.88.203:8080", allowedHeaders = "*")
 public class UserController {
     UserRepository userRepository;
     EventRepository eventRepository;
@@ -24,19 +24,20 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @PutMapping(value = "/{id}")
-    public User getUserById(@PathVariable Long id, @RequestBody User user) {
-        user = userRepository.findById(id).get();
+    @GetMapping(value = "/{id}")
+    public User getUserById(@PathVariable Long id) {
+        User user = userRepository.findById(id).get();
         return user;
     }
 
     @PostMapping
     public String saveUser(@RequestBody User user) {
+        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return "User saved successfully.";
+        return "User (" + user.getUsername() + ", ID: " + user.getUserId() + ") was saved.";
     }
 
-    @PutMapping
+    @PutMapping(value = "/{id}")
     public String updateUser(@PathVariable long id, @RequestBody User user) {
         User updatedUser = userRepository.findById(id).get();
         updatedUser.setEmail(user.getEmail());
@@ -44,22 +45,21 @@ public class UserController {
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         userRepository.save(updatedUser);
-        return "User: " + user.getFirstName() + " " + user.getLastName() + " was updated successfully.";
+        return "User (" + user.getUsername() + ", ID: " + user.getUserId() + ") was updated.";
     }
 
-    @DeleteMapping
-    public String deleteUser(@RequestParam long id) {
+    @DeleteMapping(value = "/{id}")
+    public String deleteUser(@PathVariable long id) {
         User deleteUser = userRepository.findById(id).get();
-        // Store name of user before deleting for String return
-        String deletedFirstName = deleteUser.getFirstName();
-        String deletedLastName = deleteUser.getLastName();
+        String username = deleteUser.getUsername();
+        long userId = deleteUser.getUserId();
         userRepository.delete(deleteUser);
-        return "User " + deletedFirstName + " " + deletedLastName + " was deleted successfully.";
+        return "User (" + username + ", ID: " + userId + ") was deleted.";
     }
 
-    @GetMapping(value = "/getUserMail/{email}")
-    public User getUserByEmail(@PathVariable String email, @RequestBody User user) {
-        user = userRepository.findByEmail(email);
+    @GetMapping(value = "/mail/{mail}")
+    public User getUserByEmail(@PathVariable String mail) {
+        User user = userRepository.findByEmail(mail);
         return user;
     }
 

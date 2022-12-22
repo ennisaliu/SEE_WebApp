@@ -3,13 +3,13 @@ package ch.ffhs.sse.Controller;
 import ch.ffhs.sse.Exception.NotFoundException;
 import ch.ffhs.sse.Model.User;
 import ch.ffhs.sse.Repository.UserRepository;
-import org.aspectj.weaver.ast.Not;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/login")
+@CrossOrigin(origins = "http://65.108.88.203:8080", allowedHeaders = "*")
 public class LoginController {
 
     UserRepository userRepository;
@@ -18,11 +18,11 @@ public class LoginController {
     }
 
     @PostMapping
-    public User findUserByUsernameAndPassword(@RequestBody User user) {
-        String username = user.getUsername();
-        String password = user.getPassword();
+    public Optional<User> findUserByUsernameAndPassword(@RequestBody Optional <User> user) throws NotFoundException {
+        if(!user.isPresent()) throw new NotFoundException("User not found");
+        String username = user.get().getUsername();
+        String password = user.get().getPassword();
         User authUser = userRepository.findUserByUsernameAndPassword(username, password);
-        return authUser;
-
+        return Optional.ofNullable(authUser);
     }
 }
