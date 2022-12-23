@@ -35,19 +35,12 @@ public class Event implements Serializable {
     )
     Set<User> eventParticipants = new HashSet<>();
 
-    /*
-    public Event(long eventId, boolean allDay, Timestamp start, Timestamp end, EventType eventType) {
-        this.eventId = eventId;
-        this.allDay = allDay;
-        this.start = start;
-        this.end = end;
-        this.eventType = eventType;
-    }
+    /**
+     * Default getters and setters
+     *
+     * @return various
+     */
 
-    public Event(){
-
-    }
-    */
     public long getEventId() {
         return eventId;
     }

@@ -16,6 +16,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+/**
+ * This class tests all the user controller methods, verifying the correctness of the user related classes.
+ */
+
 @SpringBootTest
 class UserTest {
 

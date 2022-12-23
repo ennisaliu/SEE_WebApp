@@ -19,6 +19,11 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+/**
+ * This class tests all the event controller methods, verifying the correctness of the event related classes.
+ */
+
+
 @SpringBootTest
 public class EventTest {
     

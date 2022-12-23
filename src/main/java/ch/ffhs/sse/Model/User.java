@@ -30,15 +30,6 @@ public class User {
     @ManyToMany(mappedBy = "eventParticipants", fetch = FetchType.EAGER)
     private Set<Event> events = new HashSet<>();
 
-
-    // @OneToMany(mappedBy = "user")
-
-    //@OneToOne(cascade =CascadeType.ALL)//@ManyToOne(targetEntity = Event.class, optional = false)
-    //@ManyToOne
-    //@JoinColumn(name="event_id",referencedColumnName="id")
-    //private Event event;
-
-
     public User(String username, String email, String password, String role, String firstName, String lastName) {
         this.username = username;
         this.email = email;
@@ -49,8 +40,12 @@ public class User {
     }
 
     public User() {
-
     }
+
+    /**
+     * Default getters and setters
+     * @return various
+     */
 
     public long getUserId() {
         return userId;
@@ -112,6 +107,11 @@ public class User {
         return events;
     }
 
+    /**
+     *
+     * Return the user object as a String object
+     * @return String user
+     */
     @Override
     public String toString() {
         return "User{" +

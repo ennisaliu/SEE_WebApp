@@ -15,6 +15,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+/**
+ * This class tests all the login controller methods, verifying the correctness of the login related classes.
+ */
+
 @SpringBootTest
 public class LoginTest {
 

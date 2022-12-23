@@ -7,9 +7,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+/**
+ * The LoginController represents the API endpoint for the login request.
+ * This API can be consumed by any client application making http requests.
+ *
+ * The controller  makes use of the  user repository by utilizing the DTO
+ * and performing all endpoint logic.
+ * The controller generates an endpoint which is accessed via path /api/event
+ * and accepts JSON objects as input parameters which then are converted to java objects.
+ */
 @RestController
 @RequestMapping("/login")
-@CrossOrigin(origins = "http://65.108.88.203:8080", allowedHeaders = "*")
 public class LoginController {
 
     UserRepository userRepository;
@@ -17,6 +25,14 @@ public class LoginController {
         this.userRepository = userRepository;
     }
 
+    /**
+     *
+     * The controller generates an endpoint which is accessed via path /api/event
+     * and accepts JSON objects as input parameters which then are converted to java objects.
+     * @param user object
+     * @exception NotFoundException
+     * @return object user
+     */
     @PostMapping
     public Optional<User> findUserByUsernameAndPassword(@RequestBody Optional <User> user) throws NotFoundException {
         if(!user.isPresent()) throw new NotFoundException("User not found");
